@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CATEGORIE|{{NAME}}{% endblock %}
+
+{% block body %}
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h1>Categorie-{{categorie.name}}</h1>
+    </div>
+    
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Product Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Image</th>
+                
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>#{{ product.id }}</td>
+                
+                <td>
+                    <a href="{{ path('app_hproduit', {'id': product.id}) }}" class="btn btn-link">
+                        <span class="badge bg-primary">
+                            <strong>{{ product.name }}</strong>
+                        </span>
+                    </a>
+                </td>
+
+                <td>{{ product.description }}</td>
+
+
+                <td>
+                    <span class="badge bg-danger">
+                        {{ product.price }}DH
+                    </span>
+                </td>
+
+                <td>
+                    <span class="badge bg-success">
+                        {{ product.quantity }}
+                        {% if product.cat.name == "vegetable" or product.cat.name == "Fruit" %}
+                            kg
+                        {% else %} 
+                            pieces
+                        {% endif %}
+                    </span>
+                </td>
+
+                {% if product.image %}
+                <td><img src="{{ asset('productimg/' ~ product.image) }}" alt="Product Image" style="width: 100px;"></td>
+                {% else %}
+                <td><img src="{{ asset('productimg/imgdefautt.png') }}" alt="Product Image" style="width: 100px;"></td>
+                {% endif %}
+
+                
+                
+
+            </tr>
+        {% else %}
+        <tr>
+            <h2>
+                <td colspan="9" style="text-align: center; color: rgb(255, 0, 0);">
+                    Aucune PRODUIT n'a été ajoutée pour la categorie <strong style="color: rgb(0, 0, 0);">{{categorie.name}}</strong> 
+                </td>
+            </h2>
+
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+

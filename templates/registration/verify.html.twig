@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <form method="post">
+            <h2 class="center">Verify your account</h2>
+                <div class="form-group">
+                <div class="center"><small>Check your Whatsapp message for your OTP</small></div><br/><br/>
+                    <div class="center">{{message}}</div><br/><br/>
+                    <div class="form-group">
+                       <input type="text" name="otp" required placeholder="Enter your OTP">
+                    </div>
+                    <button type="submit">Verify</button>
+                </div>
+            </form>
+    </div>
+
+{% endblock %}

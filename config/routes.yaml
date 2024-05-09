@@ -1,0 +1,8 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+app_products_index:
+    path: /categorie/products
+    controller: App\Controller\CategorieController::products
+    methods: GET

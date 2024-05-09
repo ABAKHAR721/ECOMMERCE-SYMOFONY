@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Order{% endblock %}
+
+{% block body %}
+    <h1>Order</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ order.id }}</td>
+            </tr>
+            <tr>
+                <th>NAME CLIENT</th>
+                <td>{{order.getUser().getUsername()}}</td>
+            </tr>
+            <tr>
+                <th>PHONE NUBMER CLIENT</th>
+                <td>
+                    <a class="text-decoration-none" href="tel:{{order.getUser().getTelephone()}}">{{order.getUser().getTelephone()}}</a>
+                    
+                </td>
+            </tr>
+
+            <tr>
+                <th>Pname</th>
+                <td>{{ order.pname }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ order.price }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ order.status }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="container d-flex justify-content-between">
+        <div>
+            <a class="btn btn-sm btn-secondary" href="{{ path('app_order_index') }}">back to list</a>
+            <a class="btn btn-sm btn-warning mx-2" href="{{ path('app_order_edit', {'id': order.id}) }}">edit</a>
+        </div>
+        {{ include('order/_delete_form.html.twig') }}
+        
+    </div>
+{% endblock %}

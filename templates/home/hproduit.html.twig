@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product{% endblock %}
+
+{% block body %}
+    {% if product %}
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h1>{{ product.cat.name }}-{{ product.name }}</h1>
+        <a href="{{path('app_order_client',{'product':product.id})}}" class="btn btn-success">Add to panier</a>
+    </div>
+        <div class="row">
+    <div class="col-md-6">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ product.id }}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ product.name }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ product.description }}</td>
+                </tr>
+                <tr>
+                    <th>Categorie</th>
+                    <td>{{ product.cat.name }}</td>
+                </tr>
+                <tr>
+                    <th>Price</th>
+                    <td>{{ product.price }}DH</td>
+                </tr>
+                <tr>
+                    <th>Quantity</th>
+                    <td>{{ product.quantity }}
+                        {% if product.cat.name == "vegetable" %}
+                         kg
+                         {% else %} piece
+                    {% endif %}</td>
+
+                </tr>
+                
+                <tr>
+                    <th>Image</th>
+                    {% if product.image %}
+                    <td><img src="{{ asset('productimg/'~product.image) }}" alt="Product Image" style="width: 100px;"></td>
+                    {% endif %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <div class="mx-auto" style="width: 400px;">
+            {% if product.image %}
+            <img src="{{ asset('productimg/'~product.image) }}" alt="Product Image" style="width: 100%;">
+            {% else %}
+            <td><img class="my-3" src="{{ asset('productimg/imgdefautt.png') }}" alt="Product Image" style="width: 400px;"></td>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div>
+               <a class="btn btn-secondary" href="{{ path('app_home') }}">Back to List</a>
+            </div>
+        </div>
+    {% else %}
+        <div class="container justify-content-center">
+            <h1>No product exists</h1>
+        </div>
+    {% endif %}
+{% endblock %}

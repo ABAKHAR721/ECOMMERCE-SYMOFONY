@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.username }}| ORDERS{% endblock %}
+
+{% block body %}
+
+
+
+<div class="row my-4">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h1>My Products</h1>
+                <a class="btn btn-sm btn-outline-warning text-color-dark" href="{{ path('app_home') }}">Back to Home</a>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                        
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Image</th>
+                            <th>status</th>
+                    </thead>
+                    <tbody>
+                        {% set total = 0 %}
+                        {% for order in orderHistory %}
+                        <tr >
+                           
+                            <td class="text-center">{{ order.pname }}</td>
+                            <td class="text-center">{{ order.price }}</td>
+                            <td class="text-center">
+                                
+                                {% for product in products %}
+                                    {% if order.pname == product.name %}
+                                        {% set total = total + order.price %}
+                                        <a href="{{ path('app_hproduit', {'id': product.id}) }}">
+                                            <img class="card-img-top img-fluid" src="{{ asset('productimg/' ~ product.image) }}" alt="Product Image" style="width: 100px;">
+                                        </a>                                       
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                            
+                            <td class="text-center">
+                                {% if not order.status %}
+                                <span class="badge  bg-dark " >
+                                    en cours de traitement.....
+                                </span>
+                                {% endif %}
+            
+                                {% if order.status=="traited" %}
+                                <span class="badge bg-success">{{ order.status }}</span>
+                                {% elseif order.status=="rejected" %}
+                                <span class="badge bg-danger">{{ order.status }}</span>
+                                {% endif %}
+                            </td>
+                            
+                        </tr>
+                        {% endfor %}
+                        <tr class="text-center">
+                            <th style="color: rgb(255, 0, 0);" colspan="1">Total</th>
+                            <td style="color: rgb(255, 0, 0);" class="fw-bold">{{ total }}DH</td>
+                            <td style="color: rgb(255, 0, 0);" class="fw-bold">
+                            </td>
+                            
+
+                        </tr>
+                    </tbody>
+                </table>
+                 </div>
+            </div>
+        </div>
+                
+    </div>
+</div>
+{% block javascripts %}
+
+<script>
+    function showAlertrejected() {
+        alert('Order rejected please contact as');
+    }
+    function showAlerttraited() {
+        alert('Order traited clicke ok to continue');
+    }
+    function showAlert() {
+        alert('Your Order is currently being processed.');
+    }
+
+    function convertToButton3(element) {
+    // Create a new button element
+    var button = document.createElement('button');
+    // Add classes to style the button
+    button.classList.add('btn', 'btn-dark');
+    // Set the button text
+    button.textContent = "Your order is currently being processed.";
+    // Replace the span with the button
+    element.parentNode.replaceChild(button, element);
+}
+
+function convertToButton2(element) {
+    // Create a new button element
+    var button = document.createElement('button');
+    // Add classes to style the button
+    button.classList.add('btn', 'btn-danger');
+    // Set the button text
+    button.textContent = "Order rejected please contact as";
+    // Replace the span with the button
+    element.parentNode.replaceChild(button, element);
+}
+
+
+
+
+
+
+</script>
+{% endblock %}
+{% endblock %}

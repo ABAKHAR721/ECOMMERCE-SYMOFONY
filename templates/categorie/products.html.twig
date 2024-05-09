@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CATEGORIE|{{NAME}}{% endblock %}
+
+{% block body %}
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h1>Categorie-{{categorie.name}}</h1>
+        
+        <a class="btn btn-sm btn-primary" href="{{ path('app_product_new') }}">Create new Product</a>
+        
+        
+
+    </div>
+    
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Product Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Image</th>
+                <th>actions</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>#{{ product.id }}</td>
+                
+                <td>
+                    <a href="{{ path('app_product_show', {'id': product.id}) }}" class="btn btn-link">
+                        <span class="badge bg-primary">
+                            <strong>{{ product.name }}</strong>
+                        </span>
+                    </a>
+                </td>
+
+                <td>{{ product.description }}</td>
+
+
+                <td>
+                    <span class="badge bg-danger">
+                        {{ product.price }}DH
+                    </span>
+                </td>
+
+                <td>
+                    <span class="badge bg-success">
+                        {{ product.quantity }}
+                        {% if product.cat.name == "vegetable" or product.cat.name == "Fruit" %}
+                            kg
+                        {% else %} 
+                            pieces
+                        {% endif %}
+                    </span>
+                </td>
+
+                {% if product.image %}
+                <td><img src="{{ asset('productimg/' ~ product.image) }}" alt="Product Image" style="width: 100px;"></td>
+                {% else %}
+                <td><img src="{{ asset('productimg/imgdefautt.png') }}" alt="Product Image" style="width: 100px;"></td>
+                {% endif %}
+
+                <td>
+                    <div class="d-flex justify-content-center">
+                        <a class="btn btn-sm btn-info" href="{{ path('app_product_show', {'id': product.id}) }}"> <strong>Show</strong>  </a>
+                        <a class="btn btn-sm btn-warning mx-1" href="{{ path('app_product_edit', {'id': product.id}) }}"><strong>Edit</strong> </a>
+                        {{ include('product/_delete_form.html.twig') }}
+                    </div>
+                </td>
+                
+
+            </tr>
+        {% else %}
+        <tr>
+            <h2><td colspan="9" style="text-align: center; font-weight: bold;">Aucune PRODUIT n'a été ajoutée. Vous pouvez en ajouter une en cliquant sur 
+                <a class="btn btn-sm btn-warning" href="{{ path('app_product_new') }}">nouveau</a>
+            </td></h2>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+
